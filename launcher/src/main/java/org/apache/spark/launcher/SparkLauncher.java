@@ -63,6 +63,12 @@ public class SparkLauncher {
   public static final String EXECUTOR_EXTRA_LIBRARY_PATH = "spark.executor.extraLibraryPath";
   /** Configuration key for the number of executor CPU cores. */
   public static final String EXECUTOR_CORES = "spark.executor.cores";
+  /** Configuration key for the number of executor CPU cores. */
+  public static final String EXECUTOR_GPUS = "spark.executor.gpus";
+
+  static final String IS_TENSORFLOW = "spark.tensorflow.application";
+
+  static final String NUM_TENSORFLOW_PS = "spark.tensorflow.num.ps";
 
   static final String PYSPARK_DRIVER_PYTHON = "spark.pyspark.driver.python";
 
