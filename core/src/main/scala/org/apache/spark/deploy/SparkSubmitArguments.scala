@@ -42,6 +42,7 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
   var deployMode: String = null
   var executorMemory: String = null
   var executorCores: String = null
+  var executorGPUs: String = null
   var totalExecutorCores: String = null
   var propertiesFile: String = null
   var driverMemory: String = null
@@ -65,6 +66,8 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
   var isPython: Boolean = false
   var pyFiles: String = null
   var isR: Boolean = false
+  var isTensorFlow: String = null
+  var tensorflowNumPs: String = null
   var action: SparkSubmitAction = null
   val sparkProperties: HashMap[String, String] = new HashMap[String, String]()
   var proxyUser: String = null
@@ -174,6 +177,10 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
       .orElse(sparkProperties.get("spark.executor.cores"))
       .orElse(env.get("SPARK_EXECUTOR_CORES"))
       .orNull
+    executorGPUs = Option(executorGPUs)
+      .orElse(sparkProperties.get("spark.executor.gpus"))
+      .orElse(env.get("SPARK_EXECUTOR_GPUS"))
+      .orNull
     totalExecutorCores = Option(totalExecutorCores)
       .orElse(sparkProperties.get("spark.cores.max"))
       .orNull
@@ -190,6 +197,17 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
       .orNull
     numExecutors = Option(numExecutors)
       .getOrElse(sparkProperties.get("spark.executor.instances").orNull)
+
+    isTensorFlow = Option(isTensorFlow)
+      .orElse(sparkProperties.get("spark.tensorflow.application"))
+      .orElse(env.get("SPARK_TENSORFLOW_APPLICATION"))
+      .getOrElse("false")
+
+    tensorflowNumPs = Option(tensorflowNumPs)
+      .orElse(sparkProperties.get("spark.tensorflow.num.ps"))
+      .orElse(env.get("SPARK_TENSORFLOW_NUM_PS"))
+      .getOrElse("0")
+
     queue = Option(queue).orElse(sparkProperties.get("spark.yarn.queue")).orNull
     keytab = Option(keytab).orElse(sparkProperties.get("spark.yarn.keytab")).orNull
     principal = Option(principal).orElse(sparkProperties.get("spark.yarn.principal")).orNull
@@ -300,6 +318,7 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
     |  deployMode              $deployMode
     |  executorMemory          $executorMemory
     |  executorCores           $executorCores
+    |  executorGPUs            $executorGPUs
     |  totalExecutorCores      $totalExecutorCores
     |  propertiesFile          $propertiesFile
     |  driverMemory            $driverMemory
@@ -309,6 +328,8 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
     |  driverExtraJavaOptions  $driverExtraJavaOptions
     |  supervise               $supervise
     |  queue                   $queue
+    |  isTensorFlow            $isTensorFlow
+    |  tensorflowNumPs         $tensorflowNumPs
     |  numExecutors            $numExecutors
     |  files                   $files
     |  pyFiles                 $pyFiles
@@ -353,6 +374,9 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
       case TOTAL_EXECUTOR_CORES =>
         totalExecutorCores = value
 
+      case EXECUTOR_GPUS =>
+        executorGPUs = value
+
       case EXECUTOR_CORES =>
         executorCores = value
 
@@ -396,6 +420,12 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
 
       case QUEUE =>
         queue = value
+
+      case IS_TENSORFLOW =>
+        isTensorFlow = value
+
+      case NUM_TENSORFLOW_PS =>
+        tensorflowNumPs = value
 
       case FILES =>
         files = Utils.resolveURIs(value)
