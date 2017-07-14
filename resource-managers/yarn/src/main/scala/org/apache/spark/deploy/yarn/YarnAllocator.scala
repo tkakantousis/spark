@@ -137,8 +137,6 @@ private[yarn] class YarnAllocator(
   // Number of gpus per executor.
   protected val executorGPUs = sparkConf.get(EXECUTOR_GPUS)
   // Resource capability requested for each executors
-  private[yarn] val resource = Resource.newInstance(executorMemory + memoryOverhead, executorCores)
-
   private[yarn] val resource = Resource.newInstance(executorMemory + memoryOverhead, executorCores, executorGPUs)
 
   protected val isTensorFlowApplication = sparkConf.get(IS_TENSORFLOW)
