@@ -406,14 +406,16 @@ private[yarn] class YarnAllocator(
 
     // Backward compliant, all non-TensorFlow spark jobs ask for containers as usual
     if (!isTensorFlowApplication) {
-      new ContainerRequest(resource, nodes, racks, RM_REQUEST_PRIORITY, true, labelExpression.orNull)
+      new ContainerRequest(resource, nodes, racks, RM_REQUEST_PRIORITY, true,
+                                                               labelExpression.orNull)
     }
     // Container requests for parameter server
     // The first NUM_TENSORFLOW_PS will be containers allocated for parameter server
     else if (isTensorFlowApplication && numTensorFlowParamServers > 0) {
       numTensorFlowParamServers -= 1
       val psResource = Resource.newInstance(resource.getMemory, resource.getVirtualCores, 0)
-      new ContainerRequest(psResource, nodes, racks, RM_REQUEST_PRIORITY, true, labelExpression.orNull)
+      new ContainerRequest(psResource, nodes, racks, RM_REQUEST_PRIORITY, true,
+                                                               labelExpression.orNull)
     }
     // Container requests for worker
     else {
