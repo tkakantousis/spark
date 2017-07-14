@@ -35,14 +35,6 @@ import org.apache.spark.rpc.RpcEndpointRef
 import org.apache.spark.scheduler.SplitInfo
 import org.apache.spark.util.ManualClock
 
-class MockResolver extends SparkRackResolver {
-
-  override def resolve(conf: Configuration, hostName: String): String = {
-    if (hostName == "host3") "/rack2" else "/rack1"
-  }
-
-}
-
 class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfterEach {
   val conf = new YarnConfiguration()
   val sparkConf = new SparkConf()
@@ -81,6 +73,14 @@ class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfte
     override def equals(other: Any): Boolean = false
   }
 
+  def createContainer(host: String): Container = {
+    // When YARN 2.6+ is required, avoid deprecation by using version with long second arg
+    val containerId = ContainerId.newInstance(appAttemptId, containerNum)
+    containerNum += 1
+    val nodeId = NodeId.newInstance(host, 1000)
+    Container.newInstance(containerId, nodeId, "", containerResource, RM_REQUEST_PRIORITY, null)
+  }
+
   def createAllocator(
                        maxExecutors: Int = 2,
                        rmClient: AMRMClient[ContainerRequest] = rmClient): YarnAllocator = {
@@ -113,7 +113,7 @@ class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfte
     val containerId = ContainerId.newInstance(appAttemptId, containerNum)
     containerNum += 1
     val nodeId = NodeId.newInstance(host, 1000)
-    Resource psRes = Resource.newInstance(3072, 6, 0)
+    val psRes = Resource.newInstance(3072, 6, 0)
     Container.newInstance(containerId, nodeId, "", psRes, RM_REQUEST_PRIORITY, null)
   }
 
