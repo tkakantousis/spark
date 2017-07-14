@@ -493,7 +493,14 @@ object SparkSubmit extends CommandLineUtils {
         sysProp = "spark.driver.cores"),
       OptionAssigner(args.supervise.toString, STANDALONE | MESOS, CLUSTER,
         sysProp = "spark.driver.supervise"),
-      OptionAssigner(args.ivyRepoPath, STANDALONE, CLUSTER, sysProp = "spark.jars.ivy")
+      OptionAssigner(args.ivyRepoPath, STANDALONE, CLUSTER, sysProp = "spark.jars.ivy"),
+
+      OptionAssigner(args.isTensorFlow, STANDALONE | YARN, ALL_DEPLOY_MODES,
+        sysProp = "spark.application.tensorflow"),
+      OptionAssigner(args.tensorflowNumPs, STANDALONE | YARN, ALL_DEPLOY_MODES,
+        sysProp = "spark.tensorflow.num.ps")
+
+
     )
 
     // In client mode, launch the application main class directly
