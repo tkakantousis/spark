@@ -475,6 +475,8 @@ object SparkSubmit extends CommandLineUtils {
       OptionAssigner(args.keytab, YARN, ALL_DEPLOY_MODES, sysProp = "spark.yarn.keytab"),
 
       // Other options
+      OptionAssigner(args.executorGPUs, STANDALONE | YARN, ALL_DEPLOY_MODES,
+        sysProp = "spark.executor.gpus"),
       OptionAssigner(args.executorCores, STANDALONE | YARN, ALL_DEPLOY_MODES,
         sysProp = "spark.executor.cores"),
       OptionAssigner(args.executorMemory, STANDALONE | MESOS | YARN, ALL_DEPLOY_MODES,
