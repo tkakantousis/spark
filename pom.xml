@@ -1635,7 +1635,7 @@
             <artifactId>guava</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>org.apache.hadoop</groupId>
+            <groupId>io.hops.hadoop</groupId>
             <artifactId>hadoop-yarn-server-resourcemanager</artifactId>
           </exclusion>
           <exclusion>
