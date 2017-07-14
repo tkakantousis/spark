@@ -43,7 +43,7 @@ class MockResolver extends SparkRackResolver {
 
 }
 
-class YarnAllocatorSuite extends SparkFunSuite with Matchers with BeforeAndAfterEach {
+class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfterEach {
   val conf = new YarnConfiguration()
   val sparkConf = new SparkConf()
   sparkConf.set("spark.driver.host", "localhost")
