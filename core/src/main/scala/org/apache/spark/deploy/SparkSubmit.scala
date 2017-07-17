@@ -946,6 +946,14 @@ private[spark] object SparkSubmitUtils {
     localM2.setName("local-m2-cache")
     cr.add(localM2)
 
+    val kompicsM2 = new IBiblioResolver
+    kompicsM2.setM2compatible(true)
+    kompicsM2.setRoot("http://kompics.sics.se/maven/repository")
+    kompicsM2.setUsepoms(true)
+    kompicsM2.setName("kompics")
+    cr.add(kompicsM2)
+
+
     val localIvy = new FileSystemResolver
     val localIvyRoot = new File(defaultIvyUserDir, "local")
     localIvy.setLocal(true)
