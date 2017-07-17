@@ -95,9 +95,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.hops.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-client</artifactId>
-      <version>${project.version}</version>
+      <version>${hadoop.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
