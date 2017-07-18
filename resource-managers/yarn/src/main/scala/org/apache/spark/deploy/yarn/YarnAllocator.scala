@@ -194,7 +194,20 @@ private[yarn] class YarnAllocator(
    * fulfilled.
    */
   private def getPendingAtLocation(location: String): Seq[ContainerRequest] = {
-    amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).asScala
+    // Either non-TensorFlow executor or TensorFlow PS, neither use GPUs
+    val nonGPUExecutorResource = Resource.newInstance(
+      resource.getMemory, resource.getVirtualCores, 0)
+    var containerRequests = amClient.getMatchingRequests(
+      RM_REQUEST_PRIORITY, location, nonGPUExecutorResource).asScala
+
+    if(isTensorFlowApplication) {
+      var tfWorkerContainerRequests = amClient.getMatchingRequests(
+        Priority.newInstance(RM_REQUEST_PRIORITY.getPriority + 1), location, resource).asScala
+
+      containerRequests = containerRequests ++ tfWorkerContainerRequests
+
+    }
+      containerRequests
       .flatMap(_.asScala)
       .toSeq
   }
@@ -543,7 +556,7 @@ private[yarn] class YarnAllocator(
                   executorHostname,
                   executorMemory,
                   executorCores,
-                  executorGPUs,
+                  container.getResource.getGPUs,
                   appAttemptId.getApplicationId.toString,
                   securityMgr,
                   localResources

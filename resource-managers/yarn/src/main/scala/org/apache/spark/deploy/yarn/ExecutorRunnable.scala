@@ -207,7 +207,6 @@ private[yarn] class ExecutorRunnable(
         "--executor-id", executorId,
         "--hostname", hostname,
         "--cores", executorCores.toString,
-        "--gpus", executorGPUs.toString,
         "--app-id", appId) ++
       userClassPath ++
       Seq(
