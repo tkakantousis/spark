@@ -90,7 +90,7 @@ class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfte
     val sparkConfClone = sparkConf.clone()
     sparkConfClone
       .set("spark.dynamicAllocation.enabled", "false")
-      .set("spark.executor.instances", "2")
+      .set("spark.executor.instances", maxExecutors.toString)
       .set("spark.executor.cores", "5")
       .set("spark.executor.memory", "2048")
       .set("spark.executor.gpus", "1")
@@ -150,8 +150,8 @@ class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfte
     handler.getNumExecutorsRunning should be (0)
     handler.getPendingAllocate.size should be (2)
 
-    val container1 = createContainer("host1")
-    val container2 = createContainer("host2")
+    val container1 = createPSContainer("host1")
+    val container2 = createWorkerContainer("host2")
 
     handler.handleAllocatedContainers(Array(container1, container2))
 
