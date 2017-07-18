@@ -122,7 +122,7 @@ class YarnTensorFlowSuite extends SparkFunSuite with Matchers with BeforeAndAfte
     val containerId = ContainerId.newInstance(appAttemptId, containerNum)
     containerNum += 1
     val nodeId = NodeId.newInstance(host, 1000)
-    Container.newInstance(containerId, nodeId, "", containerResource, RM_REQUEST_PRIORITY, null)
+    Container.newInstance(containerId, nodeId, "", containerResource, Priority.newInstance(RM_REQUEST_PRIORITY.getPriority + 1), null)
   }
 
   test("ps allocated") {
