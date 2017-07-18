@@ -324,7 +324,7 @@ class SparkSubmitSuite
       mainClass should be ("org.apache.spark.deploy.Client")
     }
     classpath should have size 0
-    sysProps should have size 9
+    sysProps should have size 11
     sysProps.keys should contain ("SPARK_SUBMIT")
     sysProps.keys should contain ("spark.master")
     sysProps.keys should contain ("spark.app.name")
@@ -334,6 +334,8 @@ class SparkSubmitSuite
     sysProps.keys should contain ("spark.driver.supervise")
     sysProps.keys should contain ("spark.ui.enabled")
     sysProps.keys should contain ("spark.submit.deployMode")
+    sysProps.keys should contain ("spark.tensorflow.application")
+    sysProps.keys should contain ("spark.tensorflow.num.ps")
     sysProps("spark.ui.enabled") should be ("false")
   }
 
