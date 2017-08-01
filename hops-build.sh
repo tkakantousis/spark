@@ -17,6 +17,7 @@
 
 #./build/mvn -Phadoop-provided -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.3 -DskipTests clean package
 
+VERSION=2.2.0
 HADOOP_PROFILE=2.7
 HADOOP_VERSION=2.7.3
 SCALA_VERSION=2.7
@@ -36,7 +37,7 @@ fi
 
 
 if [ "$1" == "deploy" ] ; then
-   VERSION=`grep -o -a -m 1 -h -r "version>.*</version" ./pom.xml | head -1 | sed "s/version//g" | sed "s/>//" | sed "s/<\///g"`    
+#   VERSION=`grep -o -a -m 1 -h -r "version>.*</version" ./pom.xml | head -1 | sed "s/version//g" | sed "s/>//" | sed "s/<\///g"`    
    echo "    scp spark-${VERSION}-SNAPSHOT-bin-hops-hadoop-gpu.tgz glassfish@snurran.sics.se:/var/www/hops"
-   scp spark-${VERSION}-SNAPSHOT-bin-hops-hadoop-gpu.tgz glassfish@snurran.sics.se:/var/www/hops
+   scp spark-${VERSION}-bin-without-hadoop.tgz glassfish@snurran.sics.se:/var/www/hops
 fi
