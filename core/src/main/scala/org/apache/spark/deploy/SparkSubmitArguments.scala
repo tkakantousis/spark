@@ -580,6 +580,7 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
         | Spark standalone and YARN only:
         |  --executor-cores NUM        Number of cores per executor. (Default: 1 in YARN mode,
         |                              or all available cores on the worker in standalone mode)
+        |  --executor-gpus NUM         Number of GPUs per executor. (Default: 0)
         |
         | YARN-only:
         |  --driver-cores NUM          Number of cores used by the driver, only in cluster mode
@@ -588,6 +589,9 @@ private[deploy] class SparkSubmitArguments(args: Seq[String], env: Map[String, S
         |  --num-executors NUM         Number of executors to launch (Default: 2).
         |                              If dynamic allocation is enabled, the initial number of
         |                              executors will be at least NUM.
+        |  --is-tensorflow BOOLEAN     If the submitted application is TensorFlowOnSpark. (Default: false)
+        |  --num-tensorflow-ps NUM     Number of executors that act as parameter server and will not be allocated a GPU.
+        |
         |  --archives ARCHIVES         Comma separated list of archives to be extracted into the
         |                              working directory of each executor.
         |  --principal PRINCIPAL       Principal to be used to login to KDC, while running on
