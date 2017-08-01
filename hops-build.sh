@@ -17,5 +17,26 @@
 
 #./build/mvn -Phadoop-provided -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.3 -DskipTests clean package
 
-#cd dev
-./dev/make-distribution.sh --name "hops-hadoop2" --tgz "-Pyarn,hadoop-provided,hadoop-2.7,parquet-provided"
+HADOOP_VERSION=2.7
+SCALA_VERSION=2.7
+
+if [ "$1" == "-help" ] ; then
+  echo "Usage: $0 [deploy]"
+  exit 0
+if
+
+if [ $# -gt 1 ] ; then
+    echo "Usage: $0 [deploy]"
+    exit 1
+fi
+
+
+./dev/make-distribution.sh --name "hops-hadoop2" --tgz "-Pyarn,hadoop-provided,hadoop-${HADOOP_VERSION},parquet-provided"
+
+
+if [ "$1" == "deploy" ] ; then
+   VERSION=`grep -o -a -m 1 -h -r "version>.*</version" ./pom.xml | head -1 | sed "s/version//g" | sed "s/>//" | sed "s/<\///g"`    
+   echo "   scp target/spark-${SCALA_VERSION}-${VERSION}-${HADOOP_VERSION}.tar.gz glassfish@snurran.sics.se:/var/www/hops"
+   #   scp target/spark-${SCALA_VERSION}-${VERSION}-${HADOOP_VERSION}.tar.gz glassfish@snurran.sics.se:/var/www/hops
+fi
+
