@@ -520,11 +520,22 @@ Apart from these, the following properties are also available, and may be useful
   </td>
 </tr>
 <tr>
+    <td><code>spark.reducer.maxBlocksInFlightPerAddress</code></td>
+    <td>Int.MaxValue</td>
+    <td>
+      This configuration limits the number of remote blocks being fetched per reduce task from a
+      given host port. When a large number of blocks are being requested from a given address in a
+      single fetch or simultaneously, this could crash the serving executor or Node Manager. This
+      is especially useful to reduce the load on the Node Manager when external shuffle is enabled.
+      You can mitigate this issue by setting it to a lower value.
+    </td>
   <td><code>spark.reducer.maxReqSizeShuffleToMem</code></td>
-  <td>200m</td>
+  <td>Long.MaxValue</td>
   <td>
     The blocks of a shuffle request will be fetched to disk when size of the request is above
-    this threshold. This is to avoid a giant request takes too much memory.
+    this threshold. This is to avoid a giant request takes too much memory. We can enable this
+    config by setting a specific value(e.g. 200m). Note that this config can be enabled only when
+    the shuffle shuffle service is newer than Spark-2.2 or the shuffle service is disabled.
   </td>
 </tr>
 <tr>
@@ -1543,6 +1554,8 @@ Apart from these, the following properties are also available, and may be useful
     of this setting is to act as a safety-net to prevent runaway uncancellable tasks from rendering
     an executor unusable.
   </td>
+</tr>
+<tr>
   <td><code>spark.stage.maxConsecutiveAttempts</code></td>
   <td>4</td>
   <td>
@@ -1763,14 +1776,6 @@ Apart from these, the following properties are also available, and may be useful
     How long for the connection to wait for ack to occur before timing
     out and giving up. To avoid unwilling timeout caused by long pause like GC,
     you can set larger value.
-  </td>
-</tr>
-<tr>
-  <td><code>spark.core.connection.auth.wait.timeout</code></td>
-  <td>30s</td>
-  <td>
-    How long for the connection to wait for authentication to occur before timing
-    out and giving up.
   </td>
 </tr>
 <tr>

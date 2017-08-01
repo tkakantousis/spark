@@ -53,7 +53,7 @@ test_that("spark.bisectingKmeans", {
                c(0, 1, 2, 3))
 
   # Test model save/load
-  if (not_cran_or_windows_with_hadoop()) {
+  if (windows_with_hadoop()) {
     modelPath <- tempfile(pattern = "spark-bisectingkmeans", fileext = ".tmp")
     write.ml(model, modelPath)
     expect_error(write.ml(model, modelPath))
@@ -127,7 +127,7 @@ test_that("spark.gaussianMixture", {
   expect_equal(p$prediction, c(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1))
 
   # Test model save/load
-  if (not_cran_or_windows_with_hadoop()) {
+  if (windows_with_hadoop()) {
     modelPath <- tempfile(pattern = "spark-gaussianMixture", fileext = ".tmp")
     write.ml(model, modelPath)
     expect_error(write.ml(model, modelPath))
@@ -175,7 +175,7 @@ test_that("spark.kmeans", {
   expect_true(class(summary.model$coefficients[1, ]) == "numeric")
 
   # Test model save/load
-  if (not_cran_or_windows_with_hadoop()) {
+  if (windows_with_hadoop()) {
     modelPath <- tempfile(pattern = "spark-kmeans", fileext = ".tmp")
     write.ml(model, modelPath)
     expect_error(write.ml(model, modelPath))
@@ -242,7 +242,7 @@ test_that("spark.lda with libsvm", {
   expect_true(logPrior <= 0 & !is.na(logPrior))
 
   # Test model save/load
-  if (not_cran_or_windows_with_hadoop()) {
+  if (windows_with_hadoop()) {
     modelPath <- tempfile(pattern = "spark-lda", fileext = ".tmp")
     write.ml(model, modelPath)
     expect_error(write.ml(model, modelPath))
@@ -263,8 +263,6 @@ test_that("spark.lda with libsvm", {
 })
 
 test_that("spark.lda with text input", {
-  skip_on_cran()
-
   text <- read.text(absoluteSparkPath("data/mllib/sample_lda_data.txt"))
   model <- spark.lda(text, optimizer = "online", features = "value")
 
@@ -307,8 +305,6 @@ test_that("spark.lda with text input", {
 })
 
 test_that("spark.posterior and spark.perplexity", {
-  skip_on_cran()
-
   text <- read.text(absoluteSparkPath("data/mllib/sample_lda_data.txt"))
   model <- spark.lda(text, features = "value", k = 3)
 
