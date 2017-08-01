@@ -17,6 +17,8 @@
 
 #./build/mvn -Phadoop-provided -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.3 -DskipTests clean package
 
+set -e
+
 VERSION=2.2.0
 HADOOP_PROFILE=2.7
 HADOOP_VERSION=2.7.3
