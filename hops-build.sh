@@ -24,22 +24,20 @@ HADOOP_PROFILE=2.7
 HADOOP_VERSION=2.7.3
 SCALA_VERSION=2.7
 
-if [ "$1" == "-help" ] ; then
+if [ "$1" == "--help" ] || [ "$1" == "-h" ] ; then
   echo "Usage: $0 [deploy]"
   exit 0
 fi
 
-if [ $# -gt 1 ] ; then
+if [ $# -gt 1 ] || [ "$1" != "deploy" ] ; then
     echo "Usage: $0 [deploy]"
     exit 1
 fi
 
 
-./dev/make-distribution.sh --name "hops-hadoop-gpu" --tgz "-Pyarn,hadoop-provided,hadoop-${HADOOP_PROFILE},parquet-provided"
-
+./dev/make-distribution.sh --name "without-hadoop" --tgz "-Pyarn,hadoop-provided,hadoop-${HADOOP_PROFILE},parquet-provided"
 
 if [ "$1" == "deploy" ] ; then
-#   VERSION=`grep -o -a -m 1 -h -r "version>.*</version" ./pom.xml | head -1 | sed "s/version//g" | sed "s/>//" | sed "s/<\///g"`    
-   echo "    scp spark-${VERSION}-SNAPSHOT-bin-hops-hadoop-gpu.tgz glassfish@snurran.sics.se:/var/www/hops"
+   echo "scp spark-${VERSION}-bin-without-hadoop.tgz to  glassfish@snurran.sics.se:/var/www/hops"
    scp spark-${VERSION}-bin-without-hadoop.tgz glassfish@snurran.sics.se:/var/www/hops
 fi
