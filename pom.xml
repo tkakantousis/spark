@@ -235,16 +235,16 @@
       <releases>
       </releases>
     </repository>
-    <snapshotRepository>
-      <id>sics-snapshot-repository</id>
+    <repository>
+      <id>sics-snapshot</id>
       <name>SICS Snapshot Repository</name>
-      <url>scpexe://kompics.i.sics.se/home/maven/snapshotrepository</url>
-    </snapshotRepository>
-    <site>
-      <id>kompics-site</id>
-      <url>scpexe://kompics.i.sics.se/var/www/kompics/report/trunk</url>
-    </site>
-    <downloadUrl>http://kompics.i.sics.se/maven/repository</downloadUrl> 
+      <url>http://kompics.sics.se/maven/snapshotrepository</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+      </snapshots>
+    </repository>
     <repository>
       <id>central</id>
       <!-- This should be at top, it makes maven try the central repo first and then others and hence faster dep resolution -->
