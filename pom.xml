@@ -1704,7 +1704,11 @@
             <artifactId>guava</artifactId>
           </exclusion>
           <exclusion>
+<<<<<<< HEAD
             <groupId>io.hops</groupId>
+=======
+            <groupId>io.hops.hadoop</groupId>
+>>>>>>> 8d95a3e2d9a296aabc8f7d56871611bac686aa36
             <artifactId>hadoop-yarn-server-resourcemanager</artifactId>
           </exclusion>
           <exclusion>

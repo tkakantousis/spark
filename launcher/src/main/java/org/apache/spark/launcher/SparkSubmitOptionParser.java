@@ -71,10 +71,13 @@ class SparkSubmitOptionParser {
   // YARN-only options.
   protected final String ARCHIVES = "--archives";
   protected final String EXECUTOR_CORES = "--executor-cores";
+  protected final String EXECUTOR_GPUS = "--executor-gpus";
   protected final String KEYTAB = "--keytab";
   protected final String NUM_EXECUTORS = "--num-executors";
   protected final String PRINCIPAL = "--principal";
   protected final String QUEUE = "--queue";
+  protected final String IS_TENSORFLOW = "--is-tensorflow";
+  protected final String NUM_TENSORFLOW_PS = "--num-tensorflow-ps";
 
   /**
    * This is the canonical list of spark-submit options. Each entry in the array contains the
@@ -96,6 +99,7 @@ class SparkSubmitOptionParser {
     { DRIVER_JAVA_OPTIONS },
     { DRIVER_LIBRARY_PATH },
     { DRIVER_MEMORY },
+    { EXECUTOR_GPUS },
     { EXECUTOR_CORES },
     { EXECUTOR_MEMORY },
     { FILES },
@@ -112,6 +116,8 @@ class SparkSubmitOptionParser {
     { PROXY_USER },
     { PY_FILES },
     { QUEUE },
+    { IS_TENSORFLOW },
+    { NUM_TENSORFLOW_PS },
     { REPOSITORIES },
     { STATUS },
     { TOTAL_EXECUTOR_CORES },

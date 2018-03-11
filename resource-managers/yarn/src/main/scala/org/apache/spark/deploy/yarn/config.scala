@@ -73,6 +73,14 @@ package object config {
     .stringConf
     .createWithDefault("default")
 
+  private[spark] val IS_TENSORFLOW = ConfigBuilder("spark.tensorflow.application")
+    .booleanConf
+    .createWithDefault(false)
+
+  private[spark] val NUM_TENSORFLOW_PS = ConfigBuilder("spark.tensorflow.num.ps")
+    .intConf
+    .createWithDefault(0)
+
   private[spark] val HISTORY_SERVER_ADDRESS = ConfigBuilder("spark.yarn.historyServer.address")
     .stringConf
     .createOptional
@@ -222,6 +230,10 @@ package object config {
   private[spark] val EXECUTOR_CORES = ConfigBuilder("spark.executor.cores")
     .intConf
     .createWithDefault(1)
+
+  private[spark] val EXECUTOR_GPUS = ConfigBuilder("spark.executor.gpus")
+    .intConf
+    .createWithDefault(0)
 
   private[spark] val EXECUTOR_NODE_LABEL_EXPRESSION =
     ConfigBuilder("spark.yarn.executor.nodeLabelExpression")
