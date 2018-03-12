@@ -44,13 +44,13 @@
       intra-jackson-module version problems.
       -->
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-aws</artifactId>
       <version>${hadoop.version}</version>
       <scope>${hadoop.deps.scope}</scope>
       <exclusions>
         <exclusion>
-          <groupId>org.apache.hadoop</groupId>
+          <groupId>io.hops</groupId>
           <artifactId>hadoop-common</artifactId>
         </exclusion>
         <exclusion>
@@ -80,13 +80,13 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-openstack</artifactId>
       <version>${hadoop.version}</version>
       <scope>${hadoop.deps.scope}</scope>
       <exclusions>
         <exclusion>
-          <groupId>org.apache.hadoop</groupId>
+          <groupId>io.hops</groupId>
           <artifactId>hadoop-common</artifactId>
         </exclusion>
         <exclusion>
@@ -154,13 +154,13 @@
         Hadoop WASB client only arrived in Hadoop 2.7
         -->
         <dependency>
-          <groupId>org.apache.hadoop</groupId>
+          <groupId>io.hops</groupId>
           <artifactId>hadoop-azure</artifactId>
           <version>${hadoop.version}</version>
           <scope>${hadoop.deps.scope}</scope>
           <exclusions>
             <exclusion>
-              <groupId>org.apache.hadoop</groupId>
+              <groupId>io.hops</groupId>
               <artifactId>hadoop-common</artifactId>
             </exclusion>
             <exclusion>

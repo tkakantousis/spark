@@ -442,8 +442,10 @@ private[spark] class ApplicationMaster(args: ApplicationMasterArguments) extends
     logInfo {
       val executorMemory = sparkConf.get(EXECUTOR_MEMORY).toInt
       val executorCores = sparkConf.get(EXECUTOR_CORES)
+      val executorGPUs = sparkConf.get(EXECUTOR_GPUS)
       val dummyRunner = new ExecutorRunnable(None, yarnConf, sparkConf, driverUrl, "<executorId>",
-        "<hostname>", executorMemory, executorCores, appId, securityMgr, localResources)
+        "<hostname>", executorMemory, executorCores,
+        executorGPUs, appId, securityMgr, localResources)
       dummyRunner.launchContextDebugInfo()
     }
 

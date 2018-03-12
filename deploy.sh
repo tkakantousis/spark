@@ -39,6 +39,6 @@ fi
 
 if [ "$1" == "deploy" ] ; then
    echo "scp spark-${VERSION}-bin-without-hadoop.tgz to  glassfish@snurran.sics.se:/var/www/hops"
-   scp spark-${VERSION}-bin-without-hadoop.tgz glassfish@snurran.sics.se:/var/www/hops
+#   scp spark-${VERSION}-bin-without-hadoop.tgz glassfish@snurran.sics.se:/var/www/hops
 fi
 
